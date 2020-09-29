@@ -9,14 +9,6 @@ class ScheduleSchema extends Schema {
       table.increments();
 
       table
-        .integer('day_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('days')
-        .onUpdate('CASCADE');
-
-      table
         .integer('laboratory_id')
         .unsigned()
         .notNullable()

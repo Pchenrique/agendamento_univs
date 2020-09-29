@@ -5,7 +5,7 @@ const Model = use('Model');
 
 class Laboratory extends Model {
   schedules() {
-    return this.belongsToMany('App/Models/Schedule');
+    return this.hasMany('App/Models/Schedule');
   }
 }
 
