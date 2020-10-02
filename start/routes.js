@@ -13,18 +13,34 @@ Route.get('courses', 'CourseController.index');
 
 Route.resource('laboratories', 'LaboratoryController')
   .apiOnly()
-  .validator(
-    new Map([
-      // [['revenueCategory.store'], ['revenueCategory/RevenueCategoryStore']],
-      // [['revenueCategory.update'], ['revenueCategory/RevenueCategoryUpdate']],
-    ])
-  )
+  .except(['update', 'store', 'destroy'])
   .middleware(
     new Map([
       [['laboratories.index'], ['auth']],
-      [['revenueCategory.show'], ['auth']],
-      // [['revenueCategory.store'], ['auth', 'admin']],
-      // [['revenueCategory.update'], ['auth', 'admin']],
-      // [['revenueCategory.destroy'], ['auth', 'admin']],
+      [['laboratories.show'], ['auth', 'admin']],
     ])
   );
+
+Route.get('schedules/:id', 'ScheduleController.show').middleware([
+  'auth',
+  'admin',
+]);
+
+Route.post('reservations', 'ReservationController.store')
+  .validator('reservation/ReservationStore')
+  .middleware(['auth']);
+
+Route.get(
+  'reservations/:laboratory_id',
+  'ReservationController.show'
+).middleware(['auth']);
+
+Route.delete(
+  'reservations/:schedule_id',
+  'ReservationController.destroy'
+).middleware(['auth']);
+
+Route.delete(
+  'reservationsAdmin/:schedule_id',
+  'ReservationController.destroyAdmin'
+).middleware(['auth', 'admin']);

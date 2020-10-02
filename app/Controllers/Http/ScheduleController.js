@@ -4,6 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+const Schedule = use('App/Models/Schedule');
+
 /**
  * Resourceful controller for interacting with schedules
  */
@@ -17,8 +20,7 @@ class ScheduleController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response }) {
-  }
+  async index({ params }) {}
 
   /**
    * Create/save a new schedule.
@@ -39,7 +41,14 @@ class ScheduleController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response }) {}
+  async show({ params, response }) {
+    const usersForSchedule = await Schedule.query()
+      .where('id', '=', params.id)
+      .with('users')
+      .fetch();
+
+    return response.status(200).json(usersForSchedule);
+  }
 
   /**
    * Update schedule details.

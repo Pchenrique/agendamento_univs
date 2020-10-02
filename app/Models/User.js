@@ -46,6 +46,13 @@ class User extends Model {
   course() {
     return this.belongsTo('App/Models/Course');
   }
+
+  schedules() {
+    return this.belongsToMany('App/Models/Schedule')
+      .withTimestamps()
+      .pivotTable('reservations')
+      .withPivot(['reservation']);
+  }
 }
 
 module.exports = User;
