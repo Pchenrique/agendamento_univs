@@ -46,8 +46,12 @@ class LaboratoryController {
    * @param {View} ctx.view
    */
   async show({ params, response }) {
-    const laboratory = await Laboratory.findOrFail(params.id);
-    await laboratory.load('schedules');
+    const laboratory = await Laboratory.query()
+      .where('id', '=', params.id)
+      .with('schedules', (builder) => {
+        builder.orderBy('id', 'asc');
+      })
+      .fetch();
 
     return response.status(200).json(laboratory);
   }

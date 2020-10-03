@@ -38,6 +38,7 @@ class ReservationController {
       .with('users', (builder) => {
         builder.where('user_id', user_id);
       })
+      .orderBy('id', 'asc')
       .fetch();
 
     return response.status(200).json(schedules);

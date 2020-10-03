@@ -44,7 +44,9 @@ class ScheduleController {
   async show({ params, response }) {
     const usersForSchedule = await Schedule.query()
       .where('id', '=', params.id)
-      .with('users')
+      .with('users', (builder) => {
+        builder.orderBy('name', 'asc');
+      })
       .fetch();
 
     return response.status(200).json(usersForSchedule);
