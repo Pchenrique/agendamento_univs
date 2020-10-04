@@ -73,7 +73,7 @@ class ReservationController {
 
   async destroyAdmin({ params, request, response }) {
     const schedule = await Schedule.findOrFail(params.schedule_id);
-    const { user_id } = request.only(['user_id']);
+    const user_id = params.user_id;
 
     await schedule.load('users', (row) => {
       row.where('user_id', user_id);

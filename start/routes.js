@@ -41,6 +41,6 @@ Route.delete(
 ).middleware(['auth']);
 
 Route.delete(
-  'reservationsAdmin/:schedule_id',
+  'reservationsAdmin/:schedule_id/:user_id',
   'ReservationController.destroyAdmin'
 ).middleware(['auth', 'admin']);
