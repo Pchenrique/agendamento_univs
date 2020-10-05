@@ -7,9 +7,15 @@ class UserAdminSeeder {
   async run() {
     await User.create({
       user_type_id: 2,
-      name: 'DTI',
-      registration: '123123',
-      password: '123123',
+      name: 'DTI - Suporte',
+      registration: '000000',
+      password: 'dtisuporte2020#000000',
+    });
+    await User.create({
+      user_type_id: 2,
+      name: 'Everton Pinheiro da Silva',
+      registration: '000001',
+      password: 'everton2020#000001',
     });
   }
 }

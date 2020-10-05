@@ -35,6 +35,9 @@ class CourseSeeder {
     await Course.create({
       name: 'Serviço social',
     });
+    await Course.create({
+      name: 'Pós-Graduação',
+    });
   }
 }
 

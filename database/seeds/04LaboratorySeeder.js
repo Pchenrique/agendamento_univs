@@ -6,15 +6,15 @@ const Laboratory = use('App/Models/Laboratory');
 class LaboratorySeeder {
   async run() {
     await Laboratory.create({
-      name: 'Laboratório de informática 1',
+      name: 'Laboratório de Informática 1',
     });
 
     await Laboratory.create({
-      name: 'Laboratório de informática 2',
+      name: 'Laboratório de Iformática 2',
     });
 
     await Laboratory.create({
-      name: 'Laboratório de informática 3',
+      name: 'Laboratório de Informática 3',
     });
   }
 }
