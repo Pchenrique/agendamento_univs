@@ -5,7 +5,8 @@ class userUserStore {
   get rules() {
     return {
       name: 'string|required',
-      registration: 'required|string',
+      cpf: 'required|string|min:14|max:14',
+      phone: 'required|string|min:14|max:14',
       course_id: 'required|number|exists:courses,id',
       password: 'required|confirmed|min:6|max:100',
     };

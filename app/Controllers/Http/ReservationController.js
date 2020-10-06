@@ -6,26 +6,35 @@ const Schedule = use('App/Models/Schedule');
 
 class ReservationController {
   async store({ request, response, auth }) {
-    const { schedule_id } = request.only('schedule_id');
+    const { schedule_id, day_id } = request.only(['schedule_id', 'day_id']);
 
     const schedule = await Schedule.findOrFail(schedule_id);
 
-    if (schedule.vacancies > 0) {
-      const user = auth.user;
+    const data = new Date();
+    const day = data.getDay();
 
-      await user.schedules().attach(schedule_id);
-      await user.load('schedules');
+    if (day_id >= day) {
+      if (schedule.vacancies > 0) {
+        const user = auth.user;
 
-      schedule.vacancies = schedule.vacancies - 1;
+        await user.schedules().attach(schedule_id);
+        await user.load('schedules');
 
-      await schedule.save();
+        schedule.vacancies = schedule.vacancies - 1;
 
-      return response.status(201).json(user);
+        await schedule.save();
+
+        return response.status(201).json(user);
+      }
+      response.status(401).json([
+        {
+          message: 'Esse horário não tem mais vagas.',
+        },
+      ]);
     }
-
     response.status(401).json([
       {
-        message: 'Esse horário não tem mais vagas.',
+        message: 'Esse dia já passou.',
       },
     ]);
   }
@@ -35,6 +44,7 @@ class ReservationController {
 
     const schedules = await Schedule.query()
       .where('laboratory_id', '=', params.laboratory_id)
+      .where('day_id', params.day_id)
       .with('users', (builder) => {
         builder.where('user_id', user_id);
       })

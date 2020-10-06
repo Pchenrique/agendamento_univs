@@ -4,7 +4,7 @@ const Antl = use('Antl');
 class authenticateAuthenticateAuth {
   get rules() {
     return {
-      registration: 'string|required',
+      cpf: 'string|required|min:14|max:14',
       password: 'required',
     };
   }

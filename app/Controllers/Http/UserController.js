@@ -10,7 +10,8 @@ class UserController {
   async store({ request, response }) {
     const data = request.only([
       'name',
-      'registration',
+      'cpf',
+      'phone',
       'password',
       'course_id',
     ]);

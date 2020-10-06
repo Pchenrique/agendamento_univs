@@ -46,9 +46,10 @@ class LaboratoryController {
    * @param {View} ctx.view
    */
   async show({ params, response }) {
-    const laboratory = await Laboratory.findOrFail(params.id);
+    const laboratory = await Laboratory.findOrFail(params.laboratory_id);
 
     await laboratory.load('schedules', (builder) => {
+      builder.where('day_id', params.day_id);
       builder.orderBy('id', 'asc');
     });
 

@@ -5,15 +5,12 @@ const User = use('App/Models/User');
 
 class AuthController {
   async authenticate({ request, response, auth }) {
-    const { registration, password } = request.only([
-      'registration',
-      'password',
-    ]);
+    const { cpf, password } = request.only(['cpf', 'password']);
 
     try {
-      const token = await auth.attempt(registration, password);
+      const token = await auth.attempt(cpf, password);
 
-      const user = await User.findByOrFail('registration', registration);
+      const user = await User.findByOrFail('cpf', cpf);
 
       await user.load('course');
 

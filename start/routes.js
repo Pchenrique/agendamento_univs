@@ -13,13 +13,13 @@ Route.get('courses', 'CourseController.index');
 
 Route.resource('laboratories', 'LaboratoryController')
   .apiOnly()
-  .except(['update', 'store', 'destroy'])
-  .middleware(
-    new Map([
-      [['laboratories.index'], ['auth']],
-      [['laboratories.show'], ['auth', 'admin']],
-    ])
-  );
+  .except(['update', 'store', 'destroy', 'show'])
+  .middleware(new Map([[['laboratories.index'], ['auth']]]));
+
+Route.get(
+  'laboratories/:laboratory_id/:day_id',
+  'LaboratoryController.show'
+).middleware(['auth', 'admin']);
 
 Route.get('schedules/:id', 'ScheduleController.show').middleware([
   'auth',
@@ -31,7 +31,7 @@ Route.post('reservations', 'ReservationController.store')
   .middleware(['auth']);
 
 Route.get(
-  'reservations/:laboratory_id',
+  'reservations/:laboratory_id/:day_id',
   'ReservationController.show'
 ).middleware(['auth']);
 

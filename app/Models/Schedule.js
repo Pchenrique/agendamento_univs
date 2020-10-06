@@ -8,6 +8,10 @@ class Schedule extends Model {
     return this.belongsTo('App/Models/Laboratory');
   }
 
+  day() {
+    return this.belongsTo('App/Models/Day');
+  }
+
   users() {
     return this.belongsToMany('App/Models/User')
       .withTimestamps()

@@ -24,7 +24,8 @@ class UserSchema extends Schema {
         .onUpdate('CASCADE');
 
       table.string('name', 80).notNullable();
-      table.string('registration', 20).notNullable().unique();
+      table.string('cpf', 20).notNullable().unique();
+      table.string('phone', 14).notNullable();
       table.string('password', 60).notNullable();
       table.timestamps();
     });
